@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./volumes/web/html/sample:/home
+      - ./volumes/web/sample:/home
     working_dir: /home
     depends_on:
       - db
