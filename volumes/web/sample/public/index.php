@@ -1,17 +1,23 @@
 <?php
-    print("Hello PHP on Docker-Compose").PHP_EOL;
+    require_once __DIR__ . '/../lib/bootstrap.php';
 
-    $db = new PDO(
-        // database name
-        "pgsql:host=db;dbname=admin;",
-        // username
-        "admin",
-        // password
-        "admin"
-    );
+    $mode = (string)filter_input(INPUT_POST, 'mode');
+    $TODO = new Simnet\TodoListManager();
 
-    $sql    = "SELECT * FROM todos";
-    $res    = $db->query($sql);
-    $result = $res->fetchAll(PDO::FETCH_ASSOC);
+    if ($mode === 'create') {
+        $todo = trim((string)filter_input(INPUT_POST, 'todo'));
+        $result = $TODO->create($todo);
+        echo $result ? 'finished' : 'error' ;
+    }
 
-    var_dump($result);
+    $todoList = [];
+    $currentDateTime = new DateTimeImmutable();
+
+    foreach ($TODO->read() as $todo) {
+        $finishedDateTime = new DateTimeImmutable($todo['finished_at']);
+        $todo['finished'] = $currentDateTime >= $finishedDateTime;
+        $todoList[] = $todo;
+    }
+
+    $view = new Simnet\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
+    $view->assign('todoList', $todoList);
