@@ -22,12 +22,13 @@ psql (PostgreSQL) 12.5 (Debian 12.5-1.pgdg100+1)
 ```
 # how to use
 
-## 1. command
+## 1. Type command to terminal
 
 ```
 $ git clone https://github.com/TowaYamashita/docker_test.git
 $ docker-compose up -d
 $ docker-compose exec web bash
+$ composer install
 $ php -S 0.0.0.0:80 -t /home/public/
 ```
 
