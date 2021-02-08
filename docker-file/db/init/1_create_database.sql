@@ -1,7 +1,10 @@
-CREATE TABLE public.test
+create table public.todos
 (
-    id serial primary key,
-    title text not null,
-    description text not null,
-    deadline_at timestamp without time zone not null
+	id serial not null
+		constraint todos_pk
+			primary key,
+	title text default '' not null,
+	finished_at timestamp without time zone default '2999-12-31 23:59:59' not null,
+	created_at timestamp without time zone default now() not null,
+	updated_at timestamp without time zone default now() not null
 );

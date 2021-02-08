@@ -10,7 +10,7 @@
         "admin"
     );
 
-    $sql    = "SELECT * FROM test";
+    $sql    = "SELECT * FROM todos";
     $res    = $db->query($sql);
     $result = $res->fetchAll(PDO::FETCH_ASSOC);
 
