@@ -1,0 +1,15 @@
+{
+    "name": "yamashita/todo",
+    "description": "todo apprication",
+    "type": "project",
+    "license": "BSD",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Simnet\\": "lib/Simnet"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.3@dev"
+    }
+}
