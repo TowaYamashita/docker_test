@@ -20,4 +20,4 @@
     }
 
     $view = new Simnet\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
-    $view->assign('todoList', $todoList);
+    $view->assignTodoListToBeDisplayed($todoList);

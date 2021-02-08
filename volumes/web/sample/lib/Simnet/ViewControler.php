@@ -10,35 +10,38 @@ class ViewControler
 
     private $filename;
     private $title;
+    private $todoList = [];
 
     /**
      * initialize
      *
-     * @param string $filename optional
-     * @param string $title optional
-     * @return bool $result
+     * @param string $filename optional defaults index.php
+     * @param string $title optional  defaults TODO Application
      */
     public function __construct(?string $filename, ?string $title)
     {
         $this->filename = $filename ?? 'index.php';
-        $this->title = $title ?? 'TODO Application';
+        $this->title    = $title ?? 'TODO Application';
     }
 
-    public function assign($name, $value)
+    /**
+     * set TodoList to be displayed
+     *
+     * @param array $todoList
+     */
+    public function assignTodoListToBeDisplayed(array $todoList)
     {
-        $this->assignList[$name] = $value;
+        $this->todoList = $todoList;
     }
 
     public function __destruct()
     {
-        $title = $this->title;
-        $header = $this->html_header();
-        $script = $this->html_script();
-        $footer = $this->html_footer();
+        $title    = $this->title;
+        $header   = $this->html_header();
+        $script   = $this->html_script();
+        $footer   = $this->html_footer();
 
-        foreach ($this->assignList as $key => $value) {
-            $$key = $value;
-        }
+        $todoList = $this->todoList;
 
         require_once self::TEMPLATE_DIR . $this->filename;
     }
