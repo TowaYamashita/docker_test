@@ -9,6 +9,11 @@
         $result = $TODO->create($todo);
         echo $result ? 'finished' : 'error' ;
     }
+    if ($mode === 'finish') {
+        $id = (int)filter_input(INPUT_POST, 'id');
+        $result = $TODO->update($id);
+        echo $result ? 'finished' : 'error' ;
+    }
 
     $todoList = [];
     $currentDateTime = new DateTimeImmutable();
