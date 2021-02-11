@@ -4,15 +4,22 @@
     $mode = (string)filter_input(INPUT_POST, 'mode');
     $TODO = new Simnet\TodoListManager();
 
-    if ($mode === 'create') {
-        $todo = trim((string)filter_input(INPUT_POST, 'todo'));
-        $result = $TODO->create($todo);
-        echo $result ? 'finished' : 'error' ;
-    }
-    if ($mode === 'finish') {
-        $id = (int)filter_input(INPUT_POST, 'id');
-        $result = $TODO->update($id);
-        echo $result ? 'finished' : 'error' ;
+    switch($mode){
+        case "create":
+            $todo = trim((string)filter_input(INPUT_POST, 'todo'));
+            $result = $TODO->create($todo);
+            echo $result ? 'finished' : 'error';
+            break;
+        case "delete":
+            $id = (int)filter_input(INPUT_POST, 'id');
+            $result = $TODO->delete($id);
+            echo $result ? 'finished' : 'error' ;
+            break;
+        case "finish":
+            $id = (int)filter_input(INPUT_POST, 'id');
+            $result = $TODO->update($id);
+            echo $result ? 'finished' : 'error' ;
+            break;
     }
 
     $todoList = [];

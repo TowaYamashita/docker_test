@@ -111,4 +111,36 @@ SQL;
         return $result;
     }
 
+    /**
+     * delete ToDo
+     *
+     * @param integer $id
+     * @return bool
+     */
+    public function delete(int $id):bool{
+        $result = true;
+
+        if (empty($this->findById($id))) {
+            return false;
+        }
+
+        $sql = <<<SQL
+        DELETE FROM todos
+        WHERE id = :id
+SQL;
+
+        $stmt = self::$DB->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        try {
+            self::$DB->beginTransaction();
+            $stmt->execute();
+            self::$DB->commit();
+        } catch (Throwable $e) {
+            self::$DB->rollBack();
+            $result = false;
+        }
+
+        return $result;
+    }
+
 }

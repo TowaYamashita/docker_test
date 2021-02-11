@@ -10,6 +10,10 @@
             <input type="hidden" name="mode" value="finish">
             <input type="hidden" name="id" value="">
         </form>
+        <form method="post" id="deleteForm">
+            <input type="hidden" name="mode" value="delete">
+            <input type="hidden" name="id" value="">
+        </form>
         <?php foreach($todoList as $todo): ?>
             <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
                 <div class="d-flex w-100 justify-content-between">
@@ -18,6 +22,9 @@
                     </h5>
                     <div>
                         <?php if(!$todo['finished']): ?>
+                            <button type="button" class="btn btn-danger code-delete-todo" value="<?= $todo['id'] ?>">
+                                削除
+                            </button>
                             <button type="button" class="btn btn-secondary code-finish-todo" value="<?= $todo['id'] ?>">
                                 完了
                             </button>
@@ -44,7 +51,5 @@
 </div>
 
 <?= $script ?>
-
-<script src="js/finishButton.js"></script>
 
 <?= $footer ?>
