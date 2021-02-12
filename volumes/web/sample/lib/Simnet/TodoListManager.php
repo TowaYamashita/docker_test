@@ -31,16 +31,7 @@ SQL;
 
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':todo', $todo);
-        try
-        {
-            self::$DB->beginTransaction();
-            $stmt->execute();
-            self::$DB->commit();
-        } catch (Throwable $e)
-        {
-            self::$DB->rollBack();
-            $result = false;
-        }
+        $result = $this->executeQuery($stmt);
 
         return $result;
     }
@@ -80,9 +71,40 @@ SQL;
      * update ToDo
      *
      * @param integer $id
+     * @param array $todo
      * @return bool
      */
-    public function update(int $id):bool
+    public function update(int $id, array $todo):bool
+    {
+        $result = true;
+
+        if (empty($this->findById($id))) {
+            return false;
+        }
+
+        $sql = <<<SQL
+        UPDATE todos
+        SET title       = :title
+         ,  finished_at = :finished_at
+         ,  updated_at  = CURRENT_TIMESTAMP
+        WHERE id = :id
+SQL;
+
+        $stmt = self::$DB->prepare($sql);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':finished_at', $finished_at);
+        $result = $this->executeQuery($stmt);
+
+        return $result;
+    }
+
+    /**
+     * finish ToDo
+     *
+     * @param integer $id
+     * @return bool
+     */
+    public function finish(int $id):bool
     {
         $result = true;
 
@@ -99,14 +121,7 @@ SQL;
 
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':id', $id);
-        try {
-            self::$DB->beginTransaction();
-            $stmt->execute();
-            self::$DB->commit();
-        } catch (Throwable $e) {
-            self::$DB->rollBack();
-            $result = false;
-        }
+        $result = $this->executeQuery($stmt);
 
         return $result;
     }
@@ -131,6 +146,13 @@ SQL;
 
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':id', $id);
+        $result = $this->executeQuery($stmt);
+
+        return $result;
+    }
+
+    private function executeQuery(object $stmt):bool{
+        $result = true;
         try {
             self::$DB->beginTransaction();
             $stmt->execute();
@@ -139,8 +161,6 @@ SQL;
             self::$DB->rollBack();
             $result = false;
         }
-
         return $result;
     }
-
 }
