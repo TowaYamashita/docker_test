@@ -6,8 +6,9 @@
 
     switch($mode){
         case "create":
-            $todo = trim((string)filter_input(INPUT_POST, 'todo'));
-            $result = $TODO->create($todo);
+            $title    = trim((string)filter_input(INPUT_POST, 'title'));
+            $deadline = trim((string)filter_input(INPUT_POST, 'deadline'));
+            $result = $TODO->create($title,$deadline);
             echo $result ? 'finished' : 'error';
             break;
         case "delete":
@@ -17,7 +18,7 @@
             break;
         case "finish":
             $id = (int)filter_input(INPUT_POST, 'id');
-            $result = $TODO->update($id);
+            $result = $TODO->finish($id);
             echo $result ? 'finished' : 'error' ;
             break;
     }

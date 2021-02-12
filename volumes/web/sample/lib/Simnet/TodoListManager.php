@@ -21,16 +21,17 @@ class TodoListManager
      * @param string $todo
      * @return bool $result
      */
-    public function create(string $todo):bool
+    public function create(string $title, string $deadline):bool
     {
         $result = true;
 
         $sql = <<<SQL
-        INSERT INTO todos (title) VALUES (:todo);
+        INSERT INTO todos (title, finished_at) VALUES (:title, :deadline);
 SQL;
 
         $stmt = self::$DB->prepare($sql);
-        $stmt->bindValue(':todo', $todo);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':deadline', $deadline);
         $result = $this->executeQuery($stmt);
 
         return $result;
@@ -151,6 +152,12 @@ SQL;
         return $result;
     }
 
+    /**
+     * execute prepared_Query
+     *
+     * @param object $stmt
+     * @return bool
+     */
     private function executeQuery(object $stmt):bool{
         $result = true;
         try {

@@ -20,6 +20,9 @@
                     <h5 class="mb-1">
                         <?= $todo['title'] ?>
                     </h5>
+                    <h5 class="mb-1">
+                        <?= $todo['finished_at'] ?>
+                    </h5>
                     <div>
                         <?php if(!$todo['finished']): ?>
                             <button type="button" class="btn btn-danger code-delete-todo" value="<?= $todo['id'] ?>">
@@ -38,10 +41,16 @@
     <form action="index.php" method="post">
         <input type="hidden" name="mode" value="create">
         <div class="form-group  mt-md-3">
-            <label for="todo">
-                TODO
+            <label for="title">
+                TODO(Within 140 characters)
             </label>
-            <input type="text" class="form-control" id="todo" name="todo" placeholder="Input Todo text within 140 characters" max="140" required>
+            <input type="text" class="form-control" id="title" name="title" max="140" required>
+        </div>
+        <div class="form-group  mt-md-3">
+            <label for="deadline">
+                Deadline
+            </label>
+            <input type="datetime-local" id="deadline" name="deadline" step="3600" required>
         </div>
         <button type="submit" class="btn btn-primary">
             Submit
