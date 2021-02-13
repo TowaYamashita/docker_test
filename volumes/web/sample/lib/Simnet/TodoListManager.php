@@ -83,6 +83,9 @@ SQL;
             return false;
         }
 
+        $title       = $todo["title"] ?? "NO TITLE";
+        $finished_at = $todo["finished_at"] ?? "2099-12-31 11:59:59";
+
         $sql = <<<SQL
         UPDATE todos
         SET title       = :title
@@ -94,6 +97,7 @@ SQL;
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':title', $title);
         $stmt->bindValue(':finished_at', $finished_at);
+        $stmt->bindValue(':id', $id);
         $result = $this->executeQuery($stmt);
 
         return $result;

@@ -14,6 +14,10 @@
             <input type="hidden" name="mode" value="delete">
             <input type="hidden" name="id" value="">
         </form>
+        <form action="edit.php" method="post" id="editForm">
+            <input type="hidden" name="mode" value="edit">
+            <input type="hidden" name="id" value="">
+        </form>
         <?php foreach($todoList as $todo): ?>
             <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
                 <div class="d-flex w-100 justify-content-between">
@@ -25,6 +29,9 @@
                     </h5>
                     <div>
                         <?php if(!$todo['finished']): ?>
+                            <button type="button" class="btn btn-success code-edit-todo" value="<?= $todo['id'] ?>">
+                                編集
+                            </button>
                             <button type="button" class="btn btn-danger code-delete-todo" value="<?= $todo['id'] ?>">
                                 削除
                             </button>
@@ -50,10 +57,10 @@
             <label for="deadline">
                 Deadline
             </label>
-            <input type="datetime-local" id="deadline" name="deadline" step="3600" required>
+            <input type="datetime-local" id="deadline" name="deadline" step="600" required>
         </div>
         <button type="submit" class="btn btn-primary">
-            Submit
+            新規作成
         </button>
     </form>
 

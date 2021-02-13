@@ -11,6 +11,17 @@
             $result = $TODO->create($title,$deadline);
             echo $result ? 'finished' : 'error';
             break;
+        case "update":
+            $id       = (int)filter_input(INPUT_POST, 'id');
+            $title    = trim((string)filter_input(INPUT_POST, 'title'));
+            $deadline = trim((string)filter_input(INPUT_POST, 'deadline'));
+            $updated_todo = [
+                "title"       => $title,
+                "finished_at" => $deadline
+            ];
+            $result = $TODO->update($id, $updated_todo);
+            echo $result ? 'finished' : 'error';
+            break;
         case "delete":
             $id = (int)filter_input(INPUT_POST, 'id');
             $result = $TODO->delete($id);
