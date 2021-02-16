@@ -3,13 +3,14 @@
 
     $mode = (string)filter_input(INPUT_POST, 'mode');
     $TODO = new Simnet\TodoListManager();
+    $view = new Simnet\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
 
     switch($mode){
         case "create":
             $title    = trim((string)filter_input(INPUT_POST, 'title'));
             $deadline = trim((string)filter_input(INPUT_POST, 'deadline'));
             $result = $TODO->create($title,$deadline);
-            echo $result ? 'finished' : 'error';
+            $view->assignAlertMessage($mode = "create", $result);
             break;
         case "update":
             $id       = (int)filter_input(INPUT_POST, 'id');
@@ -20,17 +21,17 @@
                 "finished_at" => $deadline
             ];
             $result = $TODO->update($id, $updated_todo);
-            echo $result ? 'finished' : 'error';
+            $view->assignAlertMessage($mode = "update", $result);
             break;
         case "delete":
             $id = (int)filter_input(INPUT_POST, 'id');
             $result = $TODO->delete($id);
-            echo $result ? 'finished' : 'error' ;
+            $view->assignAlertMessage($mode = "delete", $result);
             break;
         case "finish":
             $id = (int)filter_input(INPUT_POST, 'id');
             $result = $TODO->finish($id);
-            echo $result ? 'finished' : 'error' ;
+            $view->assignAlertMessage($mode = "finish", $result);
             break;
     }
 
@@ -43,5 +44,4 @@
         $todoList[] = $todo;
     }
 
-    $view = new Simnet\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
     $view->assignTodoListToBeDisplayed($todoList);

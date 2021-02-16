@@ -11,6 +11,10 @@ class ViewControler
     private $filename;
     private $title;
     private $todoList = [];
+    private $alert_message = [
+        "type" => "",
+        "body" => ""
+    ];
 
     /**
      * initialize
@@ -34,6 +38,43 @@ class ViewControler
         $this->todoList = $todoList;
     }
 
+    public function assignAlertMessage(string $mode, bool $result)
+    {
+        if($result === false){
+            $this->alert_message = [
+                "type" => "error",
+                "body" => "エラーが発生しました"
+            ];
+        }
+
+        switch($mode){
+            case "create":
+                $this->alert_message = [
+                    "type" => "success",
+                    "body" => "正常にTODOが追加されました"
+                ];
+                break;
+            case "update":
+                $this->alert_message = [
+                    "type" => "success",
+                    "body" => "正常にTODOが更新されました"
+                ];
+                break;
+            case "delete":
+                $this->alert_message = [
+                    "type" => "success",
+                    "body" => "正常にTODOが削除されました"
+                ];
+                break;
+            case "finish":
+                $this->alert_message = [
+                    "type" => "success",
+                    "body" => "TODOが完了しました"
+                ];
+                break;
+        }
+    }
+
     public function __destruct()
     {
         $title    = $this->title;
@@ -41,7 +82,8 @@ class ViewControler
         $script   = $this->html_script();
         $footer   = $this->html_footer();
 
-        $todoList = $this->todoList;
+        $alert_message = $this->alert_message;
+        $todoList      = $this->todoList;
 
         require_once self::TEMPLATE_DIR . $this->filename;
     }

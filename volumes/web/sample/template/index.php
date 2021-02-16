@@ -1,5 +1,15 @@
 <?= $header ?>
 
+<?php if($alert_message["type"] === "success"): ?>
+    <div class="alert alert-success" role="alert">
+        <?= $alert_message["body"] ?>
+    </div>
+<?php elseif($alert_message["type"] === "error") : ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $alert_message["body"] ?>
+    </div>
+<?php endif;?>
+
 <div class="container">
     <h1>
         <?= $title ?>
