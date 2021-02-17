@@ -4,14 +4,12 @@ namespace Simnet;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-class TodoListManager
+class TodoStore
 {
     /** @var PDO $DB */
     private static $DB;
-    private const TABLE_NAME = 'todos';
 
-    public function __construct()
-    {
+    public function __construct(){
         self::$DB = \Simnet\Database::getPDO();
     }
 
@@ -21,8 +19,7 @@ class TodoListManager
      * @param string $todo
      * @return bool $result
      */
-    public function create(string $title, string $deadline):bool
-    {
+    public function create(string $title, string $deadline):bool{
         $result = true;
 
         $sql = <<<SQL
@@ -42,8 +39,7 @@ SQL;
      *
      * @return array
      */
-    public function read():array
-    {
+    public function read():array{
         $sql = <<<SQL
         SELECT * FROM todos ORDER BY created_at
 SQL;
@@ -75,8 +71,7 @@ SQL;
      * @param array $todo
      * @return bool
      */
-    public function update(int $id, array $todo):bool
-    {
+    public function update(int $id, array $todo):bool{
         $result = true;
 
         if (empty($this->findById($id))) {
@@ -90,7 +85,7 @@ SQL;
         UPDATE todos
         SET title       = :title
          ,  finished_at = :finished_at
-         ,  updated_at  = CURRENT_TIMESTAMP
+         ,  updated_at  = CURRENT_TIMESTAMP(0)
         WHERE id = :id
 SQL;
 
@@ -109,8 +104,7 @@ SQL;
      * @param integer $id
      * @return bool
      */
-    public function finish(int $id):bool
-    {
+    public function finish(int $id):bool{
         $result = true;
 
         if (empty($this->findById($id))) {
@@ -119,8 +113,8 @@ SQL;
 
         $sql = <<<SQL
         UPDATE todos
-        SET finished_at = CURRENT_TIMESTAMP
-           , updated_at = CURRENT_TIMESTAMP
+        SET finished_at = CURRENT_TIMESTAMP(0)
+           , updated_at = CURRENT_TIMESTAMP(0)
         WHERE id = :id
 SQL;
 

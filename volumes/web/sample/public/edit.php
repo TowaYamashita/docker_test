@@ -2,7 +2,7 @@
     require_once __DIR__ . '/../lib/bootstrap.php';
 
     $mode = (string)filter_input(INPUT_POST, 'mode');
-    $TODO = new Simnet\TodoListManager();
+    $TODO = new Simnet\TodoStore();
 
     if($mode === "edit"){
         $id = (int)filter_input(INPUT_POST, 'id');
