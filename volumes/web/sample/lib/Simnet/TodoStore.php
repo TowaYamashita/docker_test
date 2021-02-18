@@ -81,11 +81,13 @@ SQL;
         $title       = $todo["title"] ?? "NO TITLE";
         $finished_at = $todo["finished_at"] ?? "2099-12-31 11:59:59";
 
+        // date_trunc('second', CURRENT_TIMESTAMP)
+        // トランザクションの開始時刻の秒数以下を切り捨てる
         $sql = <<<SQL
         UPDATE todos
         SET title       = :title
          ,  finished_at = :finished_at
-         ,  updated_at  = CURRENT_TIMESTAMP(0)
+         ,  updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
         WHERE id = :id
 SQL;
 
@@ -111,10 +113,12 @@ SQL;
             return false;
         }
 
+        // date_trunc('second', CURRENT_TIMESTAMP)
+        // トランザクションの開始時刻の秒数以下を切り捨てる
         $sql = <<<SQL
         UPDATE todos
-        SET finished_at = CURRENT_TIMESTAMP(0)
-           , updated_at = CURRENT_TIMESTAMP(0)
+        SET finished_at = date_trunc('second', CURRENT_TIMESTAMP)
+           , updated_at = date_trunc('second', CURRENT_TIMESTAMP)
         WHERE id = :id
 SQL;
 
