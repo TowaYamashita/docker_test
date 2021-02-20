@@ -15,6 +15,28 @@
         <?= $title ?>
     </h1>
 
+    <div class="card border-primary">
+        <div class="card-header">
+            ソート
+        </div>
+        <div class="card-body">
+            <form method="get" id="sortCreatedAt">
+                <input type="hidden" name="target" value="created_at">
+            </form>
+            <form method="get" id="sortFinishedAt">
+                <input type="hidden" name="target" value="finished_at">
+            </form>
+            <div>
+                <button type="submit" class="btn btn-info" form="sortCreatedAt">
+                    作成日
+                </button>
+                <button type="submit" class="btn btn-info" form="sortFinishedAt">
+                    期限
+                </button>
+            </div>
+        </div>
+    </div>
+
     <ul class="list-group mt-md-3">
         <form method="post" id="finishForm">
             <input type="hidden" name="mode" value="finish">
@@ -56,7 +78,7 @@
     </ul>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="card border-primary">
         <div class="card-header">
             新しいTODOの追加

@@ -39,10 +39,19 @@
             break;
     }
 
-    $todoList = [];
+    $target = (string)filter_input(INPUT_GET, 'target');
+    $todo_array = $TODO->read();
+    if($target){
+        $target_array = [];
+        foreach ($todo_array as $key => $value) {
+            $target_array[$key] = $value[$target];
+        }
+        array_multisort($target_array, SORT_DESC, $todo_array);
+    }
     $currentDateTime = new DateTimeImmutable();
+    $todoList = [];
 
-    foreach ($TODO->read() as $todo) {
+    foreach ($todo_array as $todo) {
         $finishedDateTime = new DateTimeImmutable($todo['finished_at']);
         $todo['finished'] = $currentDateTime >= $finishedDateTime;
         $todoList[] = $todo;
