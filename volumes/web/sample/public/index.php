@@ -7,18 +7,22 @@
 
     switch($mode){
         case "create":
-            $title    = trim((string)filter_input(INPUT_POST, 'title'));
-            $deadline = trim((string)filter_input(INPUT_POST, 'deadline'));
-            $result = $TODO->create($title,$deadline);
+            $title       = trim((string)filter_input(INPUT_POST, 'title'));
+            $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
+            $created_todo = [
+                "title"       => $title,
+                "finished_at" => $finished_at
+            ];
+            $result = $TODO->create($created_todo);
             $view->assignAlertMessage($mode = "create", $result);
             break;
         case "update":
-            $id       = (int)filter_input(INPUT_POST, 'id');
-            $title    = trim((string)filter_input(INPUT_POST, 'title'));
-            $deadline = trim((string)filter_input(INPUT_POST, 'deadline'));
+            $id          = (int)filter_input(INPUT_POST, 'id');
+            $title       = trim((string)filter_input(INPUT_POST, 'title'));
+            $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
             $updated_todo = [
                 "title"       => $title,
-                "finished_at" => $deadline
+                "finished_at" => $finished_at
             ];
             $result = $TODO->update($id, $updated_todo);
             $view->assignAlertMessage($mode = "update", $result);

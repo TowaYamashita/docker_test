@@ -16,20 +16,33 @@ class TodoStore
     /**
      * create Todo
      *
-     * @param string $todo
+     * @param array $todo
      * @return bool $result
      */
-    public function create(string $title, string $deadline):bool{
+    public function create(array $todo):bool{
         $result = true;
 
-        $sql = <<<SQL
-        INSERT INTO todos (title, finished_at) VALUES (:title, :deadline);
-SQL;
+        $title       = $todo["title"] ?? "NO TITLE";
+        $finished_at = $todo["finished_at"] ?? "";
 
-        $stmt = self::$DB->prepare($sql);
-        $stmt->bindValue(':title', $title);
-        $stmt->bindValue(':deadline', $deadline);
-        $result = $this->executeQuery($stmt);
+        if($finished_at && $this->isValidFormatFinishedAt($finished_at)){
+            $sql = <<<SQL
+            INSERT INTO todos (title, finished_at) VALUES (:title, :finished_at);
+            SQL;
+
+            $stmt = self::$DB->prepare($sql);
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':finished_at', $finished_at);
+            $result = $this->executeQuery($stmt);
+        }else{
+            $sql = <<<SQL
+            INSERT INTO todos (title) VALUES (:title);
+            SQL;
+
+            $stmt = self::$DB->prepare($sql);
+            $stmt->bindValue(':title', $title);
+            $result = $this->executeQuery($stmt);
+        }
 
         return $result;
     }
@@ -42,7 +55,8 @@ SQL;
     public function read():array{
         $sql = <<<SQL
         SELECT * FROM todos ORDER BY created_at
-SQL;
+        SQL;
+
         $stmt = self::$DB->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll() ?: [] ;
@@ -57,7 +71,8 @@ SQL;
     public function findById(int $id):array {
         $sql = <<<SQL
         SELECT * FROM todos WHERE id = :id
-SQL;
+        SQL;
+
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
@@ -79,23 +94,39 @@ SQL;
         }
 
         $title       = $todo["title"] ?? "NO TITLE";
-        $finished_at = $todo["finished_at"] ?? "2099-12-31 11:59:59";
+        $finished_at = $todo["finished_at"] ?? "";
 
-        // date_trunc('second', CURRENT_TIMESTAMP)
-        // トランザクションの開始時刻の秒数以下を切り捨てる
-        $sql = <<<SQL
-        UPDATE todos
-        SET title       = :title
-         ,  finished_at = :finished_at
-         ,  updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
-        WHERE id = :id
-SQL;
+        if($finished_at && $this->isValidFormatFinishedAt($finished_at)){
+            // date_trunc('second', CURRENT_TIMESTAMP)
+            // トランザクションの開始時刻の秒数以下を切り捨てる
+            $sql = <<<SQL
+            UPDATE todos
+            SET title       = :title
+            ,   finished_at = :finished_at
+            ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
+            WHERE id = :id
+            SQL;
 
-        $stmt = self::$DB->prepare($sql);
-        $stmt->bindValue(':title', $title);
-        $stmt->bindValue(':finished_at', $finished_at);
-        $stmt->bindValue(':id', $id);
-        $result = $this->executeQuery($stmt);
+            $stmt = self::$DB->prepare($sql);
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':finished_at', $finished_at);
+            $stmt->bindValue(':id', $id);
+            $result = $this->executeQuery($stmt);
+        }else{
+            $sql = <<<SQL
+            UPDATE todos
+            SET title       = :title
+            ,   finished_at = :finished_at
+            ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
+            WHERE id = :id
+            SQL;
+
+            $stmt = self::$DB->prepare($sql);
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':finished_at', $finished_at);
+            $stmt->bindValue(':id', $id);
+            $result = $this->executeQuery($stmt);
+        }
 
         return $result;
     }
@@ -120,7 +151,7 @@ SQL;
         SET finished_at = date_trunc('second', CURRENT_TIMESTAMP)
            , updated_at = date_trunc('second', CURRENT_TIMESTAMP)
         WHERE id = :id
-SQL;
+        SQL;
 
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -145,7 +176,7 @@ SQL;
         $sql = <<<SQL
         DELETE FROM todos
         WHERE id = :id
-SQL;
+        SQL;
 
         $stmt = self::$DB->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -171,5 +202,20 @@ SQL;
             $result = false;
         }
         return $result;
+    }
+
+    /**
+     * check format finished_at
+     *
+     * @param string $finished_at
+     * @return bool
+     */
+    private function isValidFormatFinishedAt(string $finished_at):bool{
+        // e.g. 2020-03-04T09:30
+        $pattern = "/\A[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]\z/";
+
+        $result = preg_match($pattern, $finished_at);
+
+        return ($result === 1) ? true : false;
     }
 }

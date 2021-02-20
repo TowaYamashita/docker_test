@@ -22,11 +22,11 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="deadline" class="col-sm-4 col-form-label">
+                <label for="finished_at" class="col-sm-4 col-form-label">
                     期限
                 </label>
                 <div class="col-sm-8">
-                    <input type="datetime-local" id="deadline" name="deadline" step="600" value="<?php echo str_replace(" ", "T", $todoList['finished_at']) ?>" required>
+                    <input type="datetime-local" id="finished_at" name="finished_at" step="600" value="<?php echo str_replace(" ", "T", $todoList['finished_at']) ?>" required>
                 </div>
             </div>
             <div class="form-group row">
