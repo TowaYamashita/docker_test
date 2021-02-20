@@ -24,7 +24,7 @@
             <input type="hidden" name="mode" value="delete">
             <input type="hidden" name="id" value="">
         </form>
-        <form action="edit.php" method="post" id="editForm">
+        <form action="edit.php" method="get" id="editForm">
             <input type="hidden" name="mode" value="edit">
             <input type="hidden" name="id" value="">
         </form>
