@@ -15,9 +15,10 @@
         <?= $title ?>
     </h1>
 
-    <div class="card border-info">
+    <div class="card border-dark">
         <div class="card-header">
-            ソート
+            <i class="fas fa-sort"></i>
+            TODOの並び替え
         </div>
         <div class="card-body">
             <form method="get">
@@ -27,11 +28,11 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-info active">
-                                <input type="radio" name="target" value="created_at" autocomplete="off" checked> Todoの作成日
+                            <label class="btn btn-outline-dark active">
+                                <input type="radio" name="target" value="created_at" autocomplete="off" checked> TODOの作成日
                             </label>
-                            <label class="btn btn-info">
-                                <input type="radio" name="target" value="finished_at" autocomplete="off"> Todoの期限
+                            <label class="btn btn-outline-dark">
+                                <input type="radio" name="target" value="finished_at" autocomplete="off"> TODOの期限
                             </label>
                         </div>
                     </div>
@@ -42,10 +43,10 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-info active">
+                            <label class="btn btn-outline-dark active">
                                 <input type="radio" name="order" value="asc" autocomplete="off" checked> 昇順
                             </label>
-                            <label class="btn btn-info">
+                            <label class="btn btn-outline-dark">
                                 <input type="radio" name="order" value="desc" autocomplete="off"> 降順
                             </label>
                         </div>
@@ -54,6 +55,7 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sort"></i>
                             並び替える
                         </button>
                     </div>
@@ -77,22 +79,25 @@
         </form>
         <?php foreach($todoList as $todo): ?>
             <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">
+                <div class="row">
+                    <div class="col-sm-6 text-truncate">
                         <?= $todo['title'] ?>
-                    </h5>
-                    <h5 class="mb-1">
+                    </div>
+                    <div class="col-sm-3">
                         <?= $todo['finished_at'] ?>
-                    </h5>
-                    <div>
+                    </div>
+                    <div class="col-sm-3">
                         <?php if(!$todo['finished']): ?>
                             <button type="button" class="btn btn-info code-edit-todo" value="<?= $todo['id'] ?>">
+                                <i class="fas fa-edit"></i>
                                 編集
                             </button>
                             <button type="button" class="btn btn-outline-danger code-delete-todo" value="<?= $todo['id'] ?>">
+                                <i class="fas fa-trash-alt"></i>
                                 削除
                             </button>
                             <button type="button" class="btn btn-success code-finish-todo" value="<?= $todo['id'] ?>">
+                                <i class="fas fa-check"></i>
                                 完了
                             </button>
                         <?php endif;?>
@@ -106,6 +111,7 @@
 <div class="container mt-3">
     <div class="card border-primary">
         <div class="card-header">
+            <i class="fas fa-plus-circle"></i>
             新しいTODOの追加
         </div>
         <div class="card-body">
@@ -130,6 +136,7 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i>
                             新規作成
                         </button>
                     </div>
