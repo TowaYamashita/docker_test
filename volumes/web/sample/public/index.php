@@ -40,13 +40,18 @@
     }
 
     $target = (string)filter_input(INPUT_GET, 'target');
+    $order = (string)filter_input(INPUT_GET, 'order');
     $todo_array = $TODO->read();
     if($target){
         $target_array = [];
         foreach ($todo_array as $key => $value) {
             $target_array[$key] = $value[$target];
         }
-        array_multisort($target_array, SORT_DESC, $todo_array);
+        if($order === "asc"){
+            array_multisort($target_array, SORT_ASC, $todo_array);
+        }elseif($order === "desc"){
+            array_multisort($target_array, SORT_DESC, $todo_array);
+        }
     }
     $currentDateTime = new DateTimeImmutable();
     $todoList = [];

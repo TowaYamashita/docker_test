@@ -15,25 +15,50 @@
         <?= $title ?>
     </h1>
 
-    <div class="card border-primary">
+    <div class="card border-info">
         <div class="card-header">
             ソート
         </div>
         <div class="card-body">
-            <form method="get" id="sortCreatedAt">
-                <input type="hidden" name="target" value="created_at">
+            <form method="get">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-4 col-form-label">
+                        並び替える対象
+                    </label>
+                    <div class="col-sm-8">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-info active">
+                                <input type="radio" name="target" value="created_at" autocomplete="off" checked> Todoの作成日
+                            </label>
+                            <label class="btn btn-info">
+                                <input type="radio" name="target" value="finished_at" autocomplete="off"> Todoの期限
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="finished_at" class="col-sm-4 col-form-label">
+                        並び替える順番
+                    </label>
+                    <div class="col-sm-8">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-info active">
+                                <input type="radio" name="order" value="asc" autocomplete="off" checked> 昇順
+                            </label>
+                            <label class="btn btn-info">
+                                <input type="radio" name="order" value="desc" autocomplete="off"> 降順
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">
+                            並び替える
+                        </button>
+                    </div>
+                </div>
             </form>
-            <form method="get" id="sortFinishedAt">
-                <input type="hidden" name="target" value="finished_at">
-            </form>
-            <div>
-                <button type="submit" class="btn btn-info" form="sortCreatedAt">
-                    作成日
-                </button>
-                <button type="submit" class="btn btn-info" form="sortFinishedAt">
-                    期限
-                </button>
-            </div>
         </div>
     </div>
 
@@ -85,31 +110,32 @@
         </div>
         <div class="card-body">
             <form action="index.php" method="post">
-            <input type="hidden" name="mode" value="create">
-            <div class="form-group row">
-                <label for="title" class="col-sm-4 col-form-label">
-                    やること(140文字以内)
-                </label>
-                <div class="col-sm-8">
-                    <input type="textarea" class="form-control" id="title" name="title" max="140" required>
+                <input type="hidden" name="mode" value="create">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-4 col-form-label">
+                        やること(140文字以内)
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="textarea" class="form-control" id="title" name="title" max="140" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="finished_at" class="col-sm-4 col-form-label">
-                    期限
-                </label>
-                <div class="col-sm-8">
-                    <input type="datetime-local" id="finished_at" name="finished_at" step="600" required>
+                <div class="form-group row">
+                    <label for="finished_at" class="col-sm-4 col-form-label">
+                        期限
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="datetime-local" id="finished_at" name="finished_at" step="600" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">
-                        新規作成
-                    </button>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">
+                            新規作成
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
