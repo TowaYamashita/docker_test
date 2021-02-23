@@ -30,6 +30,23 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="title" class="col-sm-4 col-form-label">
+                        状態
+                </label>
+                <div class="col-sm-8">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-dark active">
+                            <input type="radio" name="status" value="todo" autocomplete="off" <?php if($todoList['status'] === "todo"): ?> checked <?php endif;?> > 未完了                            </label>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="status" value="doing" autocomplete="off" <?php if($todoList['status'] === "doing"): ?> checked <?php endif;?> > 着手
+                        </label>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="status" value="done" autocomplete="off" <?php if($todoList['status'] === "done"): ?> checked <?php endif;?> > 完了
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-edit"></i>

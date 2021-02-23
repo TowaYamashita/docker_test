@@ -79,7 +79,10 @@
         <?php foreach($todoList as $todo): ?>
             <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
                 <div class="row">
-                    <div class="col-sm-6 text-truncate">
+                    <div class="col-sm-2">
+                        <?= $todo['status'] ?>
+                    </div>
+                    <div class="col-sm-4 text-truncate">
                         <?= $todo['title'] ?>
                     </div>
                     <div class="col-sm-3">
