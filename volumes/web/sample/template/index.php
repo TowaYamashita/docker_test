@@ -17,7 +17,6 @@
 
     <div class="card border-dark">
         <div class="card-header">
-            <i class="fas fa-sort"></i>
             TODOの並び替え
         </div>
         <div class="card-body">
@@ -111,7 +110,6 @@
 <div class="container mt-3">
     <div class="card border-primary">
         <div class="card-header">
-            <i class="fas fa-plus-circle"></i>
             新しいTODOの追加
         </div>
         <div class="card-body">

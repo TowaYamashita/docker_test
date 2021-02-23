@@ -32,9 +32,11 @@
             <div class="form-group row">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-edit"></i>
                         更新
                     </button>
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='index.php'">
+                        <i class="fas fa-undo-alt"></i>
                         戻る
                     </button>
                 </div>
