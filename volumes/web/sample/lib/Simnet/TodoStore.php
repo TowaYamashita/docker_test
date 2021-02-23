@@ -186,6 +186,30 @@ class TodoStore
     }
 
     /**
+     * sort ToDo
+     *
+     * @param string $targeted_key
+     * @param string $order
+     * @param array $todo_array
+     * @return array $todo_array
+     */
+    public function sortByKey(string $targeted_key, string $order, array $todo_array):array{
+        $db_column = $this->getAllColumnsFromTodos();
+
+        if($todo_array && in_array($targeted_key, $db_column, true)){
+            $target_array = [];
+            foreach ($todo_array as $key => $value) {
+                $target_array[$key] = $value[$targeted_key];
+            }
+            if($order === "asc"){
+                array_multisort($target_array, SORT_ASC, $todo_array);
+            }elseif($order === "desc"){
+                array_multisort($target_array, SORT_DESC, $todo_array);
+            }
+        }
+        return $todo_array;
+    }
+    /**
      * execute prepared_Query
      *
      * @param object $stmt
@@ -217,5 +241,22 @@ class TodoStore
         $result = preg_match($pattern, $finished_at);
 
         return ($result === 1) ? true : false;
+    }
+
+    /**
+     *  get column about todos(table)
+     *
+     * @return array
+     */
+    private function getAllColumnsFromTodos():array{
+        $sql = <<< SQL
+        select column_name
+        from information_schema.columns
+        where table_name = 'todos'
+        SQL;
+
+        $stmt = self::$DB->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN) ?: [] ;
     }
 }

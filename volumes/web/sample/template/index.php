@@ -29,10 +29,10 @@
                     <div class="col-sm-8">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-outline-dark active">
-                                <input type="radio" name="target" value="created_at" autocomplete="off" checked> TODOの作成日
+                                <input type="radio" name="key" value="created_at" autocomplete="off" checked> TODOの作成日
                             </label>
                             <label class="btn btn-outline-dark">
-                                <input type="radio" name="target" value="finished_at" autocomplete="off"> TODOの期限
+                                <input type="radio" name="key" value="finished_at" autocomplete="off"> TODOの期限
                             </label>
                         </div>
                     </div>

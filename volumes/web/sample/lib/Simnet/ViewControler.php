@@ -48,33 +48,33 @@ class ViewControler
                 "type" => "error",
                 "body" => "エラーが発生しました"
             ];
-        }
-
-        switch($mode){
-            case "create":
-                $this->alert_message = [
-                    "type" => "success",
-                    "body" => "正常にTODOが追加されました"
-                ];
-                break;
-            case "update":
-                $this->alert_message = [
-                    "type" => "success",
-                    "body" => "正常にTODOが更新されました"
-                ];
-                break;
-            case "delete":
-                $this->alert_message = [
-                    "type" => "success",
-                    "body" => "正常にTODOが削除されました"
-                ];
-                break;
-            case "finish":
-                $this->alert_message = [
-                    "type" => "success",
-                    "body" => "TODOが完了しました"
-                ];
-                break;
+        }else{
+            switch($mode){
+                case "create":
+                    $this->alert_message = [
+                        "type" => "success",
+                        "body" => "正常にTODOが追加されました"
+                    ];
+                    break;
+                case "update":
+                    $this->alert_message = [
+                        "type" => "success",
+                        "body" => "正常にTODOが更新されました"
+                    ];
+                    break;
+                case "delete":
+                    $this->alert_message = [
+                        "type" => "success",
+                        "body" => "正常にTODOが削除されました"
+                    ];
+                    break;
+                case "finish":
+                    $this->alert_message = [
+                        "type" => "success",
+                        "body" => "TODOが完了しました"
+                    ];
+                    break;
+            }
         }
     }
 
