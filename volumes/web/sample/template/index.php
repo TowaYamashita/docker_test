@@ -17,36 +17,56 @@
 
     <div class="card border-dark">
         <div class="card-header">
-            TODOの並び替え
+            表示オプション
         </div>
         <div class="card-body">
             <form method="get">
                 <div class="form-group row">
-                    <label for="title" class="col-sm-4 col-form-label">
-                        並び替える対象
+                    <label class="col-sm-2 col-form-label">
+                        並び替え
                     </label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-5">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-outline-dark active">
-                                <input type="radio" name="key" value="created_at" autocomplete="off" checked> TODOの作成日
+                                <input type="radio" name="sort_key" value="created_at" autocomplete="off" checked> TODOの作成日
                             </label>
                             <label class="btn btn-outline-dark">
-                                <input type="radio" name="key" value="finished_at" autocomplete="off"> TODOの期限
+                                <input type="radio" name="sort_key" value="finished_at" autocomplete="off"> TODOの期限
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-dark active">
+                                <input type="radio" name="sort_order" value="asc" autocomplete="off" checked> 昇順
+                            </label>
+                            <label class="btn btn-outline-dark">
+                                <input type="radio" name="sort_order" value="desc" autocomplete="off"> 降順
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="finished_at" class="col-sm-4 col-form-label">
-                        並び替える順番
+                    <label class="col-sm-2 col-form-label">
+                        表示するTODO
                     </label>
-                    <div class="col-sm-8">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-outline-dark active">
-                                <input type="radio" name="order" value="asc" autocomplete="off" checked> 昇順
+                    <div class="col-sm-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="todo" checked>
+                            <label class="form-check-label">
+                                未完了
                             </label>
-                            <label class="btn btn-outline-dark">
-                                <input type="radio" name="order" value="desc" autocomplete="off"> 降順
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="doing" checked>
+                            <label class="form-check-label">
+                                着手
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="done" checked>
+                            <label class="form-check-label">
+                                完了
                             </label>
                         </div>
                     </div>
@@ -54,8 +74,8 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-sort"></i>
-                            並び替える
+                            <i class="fas fa-redo"></i>
+                            適用する
                         </button>
                     </div>
                 </div>

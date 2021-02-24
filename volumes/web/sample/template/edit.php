@@ -35,13 +35,14 @@
                 </label>
                 <div class="col-sm-8">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-dark active">
-                            <input type="radio" name="status" value="todo" autocomplete="off" <?php if($todoList['status'] === "todo"): ?> checked <?php endif;?> > 未完了                            </label>
-                        <label class="btn btn-outline-dark">
-                            <input type="radio" name="status" value="doing" autocomplete="off" <?php if($todoList['status'] === "doing"): ?> checked <?php endif;?> > 着手
+                        <label class="btn btn-outline-dark <?= ($todoList['status'] === 'todo') ? 'active' : '' ?>">
+                            <input type="radio" name="status" value="todo" autocomplete="off" <?= ($todoList['status'] === 'todo') ? 'checked' : '' ?>> 未完了
                         </label>
-                        <label class="btn btn-outline-dark">
-                            <input type="radio" name="status" value="done" autocomplete="off" <?php if($todoList['status'] === "done"): ?> checked <?php endif;?> > 完了
+                        <label class="btn btn-outline-dark <?= ($todoList['status'] === 'doing') ? 'active' : '' ?>">
+                            <input type="radio" name="status" value="doing" autocomplete="off" <?= ($todoList['status'] === 'doing') ? 'checked' : '' ?>> 着手
+                        </label>
+                        <label class="btn btn-outline-dark <?= ($todoList['status'] === 'done') ? 'active' : '' ?>">
+                            <input type="radio" name="status" value="done" autocomplete="off" <?= ($todoList['status'] === 'done') ? 'checked' : '' ?>> 完了
                         </label>
                     </div>
                 </div>

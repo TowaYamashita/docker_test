@@ -20,9 +20,11 @@
             $id          = (int)filter_input(INPUT_POST, 'id');
             $title       = trim((string)filter_input(INPUT_POST, 'title'));
             $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
+            $status      = trim((string)filter_input(INPUT_POST, 'status'));
             $updated_todo = [
                 "title"       => $title,
-                "finished_at" => $finished_at
+                "finished_at" => $finished_at,
+                "status"      => $status
             ];
             $result = $TODO->update($id, $updated_todo);
             $view->assignAlertMessage($mode = "update", $result);
@@ -39,16 +41,19 @@
             break;
     }
 
-    $key        = (string)filter_input(INPUT_GET, 'key');
-    $order      = (string)filter_input(INPUT_GET, 'order');
-    $todo_array = $TODO->sortByKey($key, $order, $TODO->read());
+    $sort_key                       = (string)filter_input(INPUT_GET, 'sort_key');
+    $sort_order                     = (string)filter_input(INPUT_GET, 'sort_order');
+    $checked_status_to_be_displayed = filter_input(INPUT_GET, 'checked_status_to_be_displayed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+    $todo_list_picked_by_status = $TODO->pickByCheckedStatus($checked_status_to_be_displayed ,$TODO->read());
+    $todo_list_sorted           = $TODO->sortByKey($sort_key, $sort_order, $todo_list_picked_by_status);
 
     $currentDateTime = new DateTimeImmutable();
-    $todoList = [];
-    foreach ($todo_array as $todo) {
+    $todo_list_to_be_displayed = [];
+    foreach ($todo_list_sorted as $todo){
         $finishedDateTime = new DateTimeImmutable($todo['finished_at']);
         $todo['finished'] = $currentDateTime >= $finishedDateTime;
-        $todoList[] = $todo;
+        $todo_list_to_be_displayed[] = $todo;
     }
 
-    $view->assignTodoListToBeDisplayed($todoList);
+    $view->assignTodoListToBeDisplayed($todo_list_to_be_displayed);

@@ -95,6 +95,7 @@ class TodoStore
 
         $title       = $todo["title"] ?? "NO TITLE";
         $finished_at = $todo["finished_at"] ?? "";
+        $status      = $todo["status"] ?? "todo";
 
         if($finished_at && $this->isValidFormatFinishedAt($finished_at)){
             // date_trunc('second', CURRENT_TIMESTAMP)
@@ -104,26 +105,28 @@ class TodoStore
             SET title       = :title
             ,   finished_at = :finished_at
             ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
+            ,   status      = :status
             WHERE id = :id
             SQL;
 
             $stmt = self::$DB->prepare($sql);
             $stmt->bindValue(':title', $title);
             $stmt->bindValue(':finished_at', $finished_at);
+            $stmt->bindValue(':status', $status);
             $stmt->bindValue(':id', $id);
             $result = $this->executeQuery($stmt);
         }else{
             $sql = <<<SQL
             UPDATE todos
             SET title       = :title
-            ,   finished_at = :finished_at
             ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
+            ,   status      = :status
             WHERE id = :id
             SQL;
 
             $stmt = self::$DB->prepare($sql);
             $stmt->bindValue(':title', $title);
-            $stmt->bindValue(':finished_at', $finished_at);
+            $stmt->bindValue(':status', $status);
             $stmt->bindValue(':id', $id);
             $result = $this->executeQuery($stmt);
         }
@@ -209,6 +212,31 @@ class TodoStore
         }
         return $todo_array;
     }
+
+    /**
+     * pick todo by checked status
+     *
+     * @param array $checked_status_to_be_displayed nullable
+     * @param array $todo_list
+     * @return array
+     */
+    public function pickByCheckedStatus(?array $checked_status_to_be_displayed, array $todo_list):array{
+        if(is_null($checked_status_to_be_displayed)){
+            return $todo_list;
+        }
+
+        $checked_status_to_be_displayed = array_values(array_intersect($checked_status_to_be_displayed, ['todo', 'doing', 'done']));
+        $todo_list_picked_by_status = [];
+        foreach($todo_list as $todo){
+            if(in_array($todo["status"], $checked_status_to_be_displayed, true)){
+                $todo_list_picked_by_status[] = $todo;
+            }
+        }
+
+        return $todo_list_picked_by_status;
+
+    }
+
     /**
      * execute prepared_Query
      *
