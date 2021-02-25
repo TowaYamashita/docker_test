@@ -18,7 +18,7 @@
                     やること(140文字以内)
                 </label>
                 <div class="col-sm-8">
-                    <input type="textarea" class="form-control" id="title" name="title" max="140" value="<?php echo $todoList['title'] ?>" required>
+                    <input type="textarea" class="form-control" id="title" name="title" max="140" value="<?= $todoList['title'] ?>" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -26,7 +26,7 @@
                     期限
                 </label>
                 <div class="col-sm-8">
-                    <input type="datetime-local" id="finished_at" name="finished_at" step="600" value="<?php echo str_replace(" ", "T", $todoList['finished_at']) ?>" required>
+                    <input type="datetime-local" id="finished_at" name="finished_at" step="600" value="<?= str_replace(" ", "T", $todoList['finished_at']) ?>" required>
                 </div>
             </div>
             <div class="form-group row">
