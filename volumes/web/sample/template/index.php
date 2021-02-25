@@ -25,24 +25,24 @@
                     <label class="col-sm-2 col-form-label">
                         並び替え
                     </label>
-                    <div class="col-sm-5">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-outline-dark active">
-                                <input type="radio" name="sort_key" value="created_at" autocomplete="off" checked> TODOの作成日
-                            </label>
-                            <label class="btn btn-outline-dark">
-                                <input type="radio" name="sort_key" value="finished_at" autocomplete="off"> TODOの期限
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-outline-dark active">
-                                <input type="radio" name="sort_order" value="asc" autocomplete="off" checked> 昇順
-                            </label>
-                            <label class="btn btn-outline-dark">
-                                <input type="radio" name="sort_order" value="desc" autocomplete="off"> 降順
-                            </label>
+                    <div class="col-sm-10">
+                        <div class="btn-toolbar">
+                            <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                                <label class="btn btn-outline-dark active">
+                                    <input type="radio" name="sort_key" value="created_at" autocomplete="off" checked> TODOの作成日
+                                </label>
+                                <label class="btn btn-outline-dark">
+                                    <input type="radio" name="sort_key" value="finished_at" autocomplete="off"> TODOの期限
+                                </label>
+                            </div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-dark active">
+                                    <input type="radio" name="sort_order" value="asc" autocomplete="off" checked> 昇順
+                                </label>
+                                <label class="btn btn-outline-dark">
+                                    <input type="radio" name="sort_order" value="desc" autocomplete="off"> 降順
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
