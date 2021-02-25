@@ -103,7 +103,7 @@
                         <?= $todo['status'] ?>
                     </div>
                     <div class="col-sm-4 text-truncate">
-                        <?= $todo['title'] ?>
+                        <?= htmlspecialchars($todo['title'], ENT_QUOTES, 'UTF-8') ?>
                     </div>
                     <div class="col-sm-3">
                         <?= $todo['finished_at'] ?>

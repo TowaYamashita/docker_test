@@ -18,7 +18,7 @@
                     やること(140文字以内)
                 </label>
                 <div class="col-sm-8">
-                    <input type="textarea" class="form-control" id="title" name="title" max="140" value="<?= $todoList['title'] ?>" required>
+                    <input type="textarea" class="form-control" id="title" name="title" max="140" value="<?= htmlspecialchars($todoList['title'], ENT_QUOTES, 'UTF-8') ?>" required>
                 </div>
             </div>
             <div class="form-group row">
