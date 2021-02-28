@@ -153,10 +153,12 @@ class TodoStore
         UPDATE todos
         SET finished_at = date_trunc('second', CURRENT_TIMESTAMP)
            , updated_at = date_trunc('second', CURRENT_TIMESTAMP)
+           , status = :status
         WHERE id = :id
         SQL;
 
         $stmt = self::$DB->prepare($sql);
+        $stmt->bindValue(':status', 'done');
         $stmt->bindValue(':id', $id);
         $result = $this->executeQuery($stmt);
 
