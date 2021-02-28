@@ -39,43 +39,10 @@ class ViewControler
     /**
      * set AlertMessage to be displayed
      *
-     * @param string $mode
-     * @param bool   $result
+     * @param array $alert_message
      */
-    public function assignAlertMessage(string $mode, bool $result){
-        if($result === false){
-            $this->alert_message = [
-                "type" => "error",
-                "body" => "エラーが発生しました"
-            ];
-        }else{
-            switch($mode){
-                case "create":
-                    $this->alert_message = [
-                        "type" => "success",
-                        "body" => "正常にTODOが追加されました"
-                    ];
-                    break;
-                case "update":
-                    $this->alert_message = [
-                        "type" => "success",
-                        "body" => "正常にTODOが更新されました"
-                    ];
-                    break;
-                case "delete":
-                    $this->alert_message = [
-                        "type" => "success",
-                        "body" => "正常にTODOが削除されました"
-                    ];
-                    break;
-                case "finish":
-                    $this->alert_message = [
-                        "type" => "success",
-                        "body" => "TODOが完了しました"
-                    ];
-                    break;
-            }
-        }
+    public function assignAlertMessage(array $alert_message){
+        $this->alert_message = $alert_message;
     }
 
     public function __destruct(){

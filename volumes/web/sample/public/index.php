@@ -14,7 +14,8 @@
                 "finished_at" => $finished_at
             ];
             $result = $TODO->create($created_todo);
-            $view->assignAlertMessage($mode = "create", $result);
+            $alert_message_maker = new Simnet\AlertMessageMaker("create", $result);
+            $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
         case "update":
             $id          = (int)filter_input(INPUT_POST, 'id');
@@ -27,17 +28,20 @@
                 "status"      => $status
             ];
             $result = $TODO->update($id, $updated_todo);
-            $view->assignAlertMessage($mode = "update", $result);
+            $alert_message_maker = new Simnet\AlertMessageMaker("update", $result);
+            $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
         case "delete":
             $id = (int)filter_input(INPUT_POST, 'id');
             $result = $TODO->delete($id);
-        $view->assignAlertMessage($mode = "delete", $result);
+            $alert_message_maker = new Simnet\AlertMessageMaker("delete", $result);
+            $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
         case "finish":
             $id = (int)filter_input(INPUT_POST, 'id');
             $result = $TODO->finish($id);
-            $view->assignAlertMessage($mode = "finish", $result);
+            $alert_message_maker = new Simnet\AlertMessageMaker("finish", $result);
+            $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
     }
 
@@ -45,7 +49,7 @@
     $sort_order                     = (string)filter_input(INPUT_GET, 'sort_order');
     $checked_status_to_be_displayed = filter_input(INPUT_GET, 'checked_status_to_be_displayed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-    $todo_list_picked_by_status = $TODO->pickByCheckedStatus($checked_status_to_be_displayed ,$TODO->read());
+    $todo_list_picked_by_status = $TODO->pickByCheckedStatus($checked_status_to_be_displayed, $TODO->read());
     $todo_list_sorted           = $TODO->sortByKey($sort_key, $sort_order, $todo_list_picked_by_status);
 
     $currentDateTime = new DateTimeImmutable();
