@@ -54,7 +54,12 @@ class TodoStore
      */
     public function read():array{
         $sql = <<<SQL
-        SELECT * FROM todos ORDER BY created_at
+        SELECT
+        todos.id, todos.title, todo_statuses.status, todos.finished_at, todos.created_at, todos.updated_at
+        FROM todos
+        JOIN todo_statuses
+        ON todo_statuses.id = todos.status_id
+        ORDER BY created_at
         SQL;
 
         $stmt = self::$DB->prepare($sql);
@@ -70,7 +75,12 @@ class TodoStore
      */
     public function findById(int $id):array {
         $sql = <<<SQL
-        SELECT * FROM todos WHERE id = :id
+        SELECT
+        todos.id, todos.title, todo_statuses.status, todos.finished_at, todos.created_at, todos.updated_at
+        FROM todos
+        JOIN todo_statuses
+        ON todo_statuses.id = todos.status_id
+        WHERE todos.id = :id
         SQL;
 
         $stmt = self::$DB->prepare($sql);
@@ -105,7 +115,11 @@ class TodoStore
             SET title       = :title
             ,   finished_at = :finished_at
             ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
-            ,   status      = :status
+            ,   status_id   = (
+                SELECT id
+                FROM todo_statuses
+                WHERE status = :status
+            )
             WHERE id = :id
             SQL;
 
@@ -120,7 +134,11 @@ class TodoStore
             UPDATE todos
             SET title       = :title
             ,   updated_at  = date_trunc('second', CURRENT_TIMESTAMP)
-            ,   status      = :status
+            ,   status_id   = (
+                SELECT id
+                FROM todo_statuses
+                WHERE status = :status
+            )
             WHERE id = :id
             SQL;
 
@@ -153,7 +171,11 @@ class TodoStore
         UPDATE todos
         SET finished_at = date_trunc('second', CURRENT_TIMESTAMP)
            , updated_at = date_trunc('second', CURRENT_TIMESTAMP)
-           , status = :status
+           , status_id   = (
+                SELECT id
+                FROM todo_statuses
+                WHERE status = :status
+            )
         WHERE id = :id
         SQL;
 

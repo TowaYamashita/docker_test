@@ -21,7 +21,8 @@
             $id          = (int)filter_input(INPUT_POST, 'id');
             $title       = trim((string)filter_input(INPUT_POST, 'title'));
             $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
-            $status      = trim((string)filter_input(INPUT_POST, 'status'));
+            $status_raw  = trim((string)filter_input(INPUT_POST, 'status'));
+            $status      = (new Simnet\TodoStatus($status_raw))->getStatus();
             $updated_todo = [
                 "title"       => $title,
                 "finished_at" => $finished_at,
