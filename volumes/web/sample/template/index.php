@@ -100,7 +100,9 @@
             <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
                 <div class="row">
                     <div class="col-sm-2">
-                        <?= $todo['status'] ?>
+                        <?= $todo['status'] === 'todo' ? '未完了' : '' ?>
+                        <?= $todo['status'] === 'doing' ? '着手' : '' ?>
+                        <?= $todo['status'] === 'done' ? '完了' : '' ?>
                     </div>
                     <div class="col-sm-4 text-truncate">
                         <?= htmlspecialchars($todo['title'], ENT_QUOTES, 'UTF-8') ?>
