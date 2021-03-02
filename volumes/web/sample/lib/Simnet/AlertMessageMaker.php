@@ -16,7 +16,7 @@ class AlertMessageMaker
      * @param bool $result
      */
     public function __construct(string $mode, bool $result){
-        $this->mode   = in_array($mode, ["create", "update", "delete", "finish"], true) ? $mode : "";
+        $this->mode   = in_array($mode, ["create", "update", "delete", "change_status"], true) ? $mode : "";
         $this->result = ($this->mode !== "") ? $result : false;
     }
 
@@ -60,8 +60,8 @@ class AlertMessageMaker
             case "delete":
                 $alert_message["body"] = "正常にTODOが削除されました";
                 break;
-            case "finish":
-                $alert_message["body"] = "TODOが完了しました";
+            case "change_status":
+                $alert_message["body"] = "TODOの状態が変更されました";
                 break;
         }
 

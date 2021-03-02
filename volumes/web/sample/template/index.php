@@ -84,8 +84,8 @@
     </div>
 
     <ul class="list-group mt-md-3">
-        <form method="post" id="finishForm">
-            <input type="hidden" name="mode" value="finish">
+        <form method="post" id="changeStatus">
+            <input type="hidden" name="mode" value="change_status">
             <input type="hidden" name="id" value="">
         </form>
         <form method="post" id="deleteForm">
@@ -97,7 +97,7 @@
             <input type="hidden" name="id" value="">
         </form>
         <?php foreach($todoList as $todo): ?>
-            <li class="list-group-item<?php if($todo['finished']): ?> list-group-item-dark<?php endif;?>">
+            <li class="list-group-item<?php if($todo['status'] === 'done'): ?> list-group-item-dark<?php endif;?>">
                 <div class="row">
                     <div class="col-sm-2">
                         <?= $todo['status'] === 'todo' ? '未完了' : '' ?>
@@ -111,7 +111,7 @@
                         <?= $todo['finished_at'] ?>
                     </div>
                     <div class="col-sm-3">
-                        <?php if(!$todo['finished']): ?>
+                        <?php if($todo['status'] !== 'done'): ?>
                             <button type="button" class="btn btn-info code-edit-todo" value="<?= $todo['id'] ?>">
                                 <i class="fas fa-edit"></i>
                                 編集
@@ -120,9 +120,14 @@
                                 <i class="fas fa-trash-alt"></i>
                                 削除
                             </button>
-                            <button type="button" class="btn btn-success code-finish-todo" value="<?= $todo['id'] ?>">
-                                <i class="fas fa-check"></i>
-                                完了
+                            <button type="button" class="btn btn-success code-change-status" value="<?= $todo['id'] ?>">
+                                <?php if($todo['status'] === 'todo'): ?>
+                                    <i class="fas fa-fire"></i>
+                                    着手
+                                <?php elseif($todo['status'] === 'doing'): ?>
+                                    <i class="fas fa-check"></i>
+                                    完了
+                                <?php endif; ?>
                             </button>
                         <?php endif;?>
                     </div>

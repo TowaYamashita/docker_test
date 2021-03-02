@@ -22,7 +22,7 @@
             $title       = trim((string)filter_input(INPUT_POST, 'title'));
             $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
             $status_raw  = trim((string)filter_input(INPUT_POST, 'status'));
-            $status      = (new Simnet\TodoStatus($status_raw))->getStatus();
+            $status      = (new Simnet\TodoStatus($status_raw))->getCurrentStatus();
             $updated_todo = [
                 "title"       => $title,
                 "finished_at" => $finished_at,
@@ -38,10 +38,10 @@
             $alert_message_maker = new Simnet\AlertMessageMaker("delete", $result);
             $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
-        case "finish":
+        case "change_status":
             $id = (int)filter_input(INPUT_POST, 'id');
-            $result = $TODO->finish($id);
-            $alert_message_maker = new Simnet\AlertMessageMaker("finish", $result);
+            $result = $TODO->changeTodoStatus($id);
+            $alert_message_maker = new Simnet\AlertMessageMaker("change_status", $result);
             $view->assignAlertMessage($alert_message_maker->getAlertMessage());
             break;
     }
@@ -53,12 +53,5 @@
     $todo_list_picked_by_status = $TODO->pickByCheckedStatus($checked_status_to_be_displayed, $TODO->read());
     $todo_list_sorted           = $TODO->sortByKey($sort_key, $sort_order, $todo_list_picked_by_status);
 
-    $currentDateTime = new DateTimeImmutable();
-    $todo_list_to_be_displayed = [];
-    foreach ($todo_list_sorted as $todo){
-        $finishedDateTime = new DateTimeImmutable($todo['finished_at']);
-        $todo['finished'] = $currentDateTime >= $finishedDateTime;
-        $todo_list_to_be_displayed[] = $todo;
-    }
-
+    $todo_list_to_be_displayed = $todo_list_sorted;
     $view->assignTodoListToBeDisplayed($todo_list_to_be_displayed);

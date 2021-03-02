@@ -153,24 +153,26 @@ class TodoStore
     }
 
     /**
-     * finish ToDo
+     * change ToDo status
      *
      * @param integer $id
      * @return bool
      */
-    public function finish(int $id):bool{
+    public function changeTodoStatus(int $id):bool{
         $result = true;
 
-        if (empty($this->findById($id))) {
+        if (empty($todo = $this->findById($id))) {
             return false;
         }
+
+        $current_status = $todo['status'];
+        $next_status    = (new \Simnet\TodoStatus($current_status))->getNextStatus();
 
         // date_trunc('second', CURRENT_TIMESTAMP)
         // トランザクションの開始時刻の秒数以下を切り捨てる
         $sql = <<<SQL
         UPDATE todos
-        SET finished_at = date_trunc('second', CURRENT_TIMESTAMP)
-           , updated_at = date_trunc('second', CURRENT_TIMESTAMP)
+        SET  updated_at = date_trunc('second', CURRENT_TIMESTAMP)
            , status_id   = (
                 SELECT id
                 FROM todo_statuses
@@ -180,7 +182,7 @@ class TodoStore
         SQL;
 
         $stmt = self::$DB->prepare($sql);
-        $stmt->bindValue(':status', 'done');
+        $stmt->bindValue(':status', $next_status);
         $stmt->bindValue(':id', $id);
         $result = $this->executeQuery($stmt);
 
