@@ -11,7 +11,7 @@ create table public.todos
 	id serial not null
 		constraint todos_pk
 			primary key,
-	title text default '' not null,
+	title text default 'NO TITLE' not null,
 	status_id integer default 1 not null,
 	foreign key (status_id) references public.todo_statuses(id),
 	finished_at timestamp without time zone default '2999-12-31 23:59:59' not null,
