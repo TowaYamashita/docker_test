@@ -8,11 +8,7 @@ class TodoStatus
 {
     private static $DB;
     private static $DEFAULT_STATUS = "todo";
-    private static $STATUS_LEVEL = [
-        "todo",
-        "doing",
-        "done"
-    ];
+    private static $STATUS_LEVEL;
     private $status;
 
     public function __construct($status){
