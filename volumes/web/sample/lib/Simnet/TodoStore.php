@@ -242,25 +242,19 @@ class TodoStore
     /**
      * pick todo by checked status
      *
-     * @param array $checked_status_to_be_displayed nullable
-     * @param array $todo_list
+     * @param array $checked_status_to_be_displayed
+     * @param array $todo_array
      * @return array
      */
-    public function pickByCheckedStatus(?array $checked_status_to_be_displayed, array $todo_list):array{
-        if(is_null($checked_status_to_be_displayed)){
-            return $todo_list;
-        }
-
-        $checked_status_to_be_displayed = array_values(array_intersect($checked_status_to_be_displayed, ['todo', 'doing', 'done']));
+    public function pickTodoByCheckedStatus(array $checked_status_to_be_displayed, array $todo_array):array{
         $todo_list_picked_by_status = [];
-        foreach($todo_list as $todo){
+        foreach($todo_array as $todo){
             if(in_array($todo["status"], $checked_status_to_be_displayed, true)){
                 $todo_list_picked_by_status[] = $todo;
             }
         }
 
         return $todo_list_picked_by_status;
-
     }
 
     /**

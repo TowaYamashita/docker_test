@@ -50,8 +50,7 @@
     $sort_order                     = (string)filter_input(INPUT_GET, 'sort_order');
     $checked_status_to_be_displayed = filter_input(INPUT_GET, 'checked_status_to_be_displayed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-    $todo_list_picked_by_status = $TODO->pickByCheckedStatus($checked_status_to_be_displayed, $TODO->read());
+    $todo_list_picked_by_status = $TODO->pickTodoByCheckedStatus(Simnet\TodoStatus::pickStatusByChecked($checked_status_to_be_displayed), $TODO->read());
     $todo_list_sorted           = $TODO->sortByKey($sort_key, $sort_order, $todo_list_picked_by_status);
 
-    $todo_list_to_be_displayed = $todo_list_sorted;
-    $view->assignTodoListToBeDisplayed($todo_list_to_be_displayed);
+    $view->assignTodoListToBeDisplayed($todo_list_sorted);
