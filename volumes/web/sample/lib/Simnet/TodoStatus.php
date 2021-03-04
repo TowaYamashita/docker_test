@@ -11,10 +11,10 @@ class TodoStatus
     private static $STATUS_LEVEL;
     private $status;
 
-    public function __construct(string $status){
+    public function __construct(?string $status){
         self::$DB           = \Simnet\Database::getPDO();
         self::$STATUS_LEVEL = self::fetchStatusFromDB();
-        $this->status = in_array($status, self::$STATUS_LEVEL, true) ? $status : self::$DEFAULT_STATUS;
+        $this->status = $this->validate($status);
     }
 
     /**
@@ -22,19 +22,29 @@ class TodoStatus
      *
      * @return string
      */
-    public function getCurrentStatus():string{
+    public function get():string{
         return $this->status;
     }
 
+    public function advance(){
+        switch($this->status){
+            case "todo":
+                $this->status = "doing";
+                break;
+            case "doing":
+                $this->status = "done";
+                break;
+            case "done":
+                $this->status === "done";
+                break;
+        }
+    }
     /**
      * get next_level status
      *
      * @return string
      */
     public function getNextStatus():string{
-        if($this->status === "done"){
-            return "done";
-        }
         switch($this->status){
             case "todo":
                 return "doing";
@@ -42,7 +52,17 @@ class TodoStatus
             case "doing":
                 return "done";
                 break;
+            case "done":
+                return "done";
+                break;
         }
+    }
+
+    private function validate(?string $status):string{
+        if(is_null($status)){
+            return self::$DEFAULT_STATUS;
+        }
+        return in_array($status, self::$STATUS_LEVEL, true) ? $status : self::$DEFAULT_STATUS;
     }
 
     /**

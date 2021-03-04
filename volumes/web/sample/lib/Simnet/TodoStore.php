@@ -22,10 +22,10 @@ class TodoStore
     public function create(array $todo):bool{
         $result = true;
 
-        $title       = $todo["title"] ?? "NO TITLE";
-        $finished_at = $todo["finished_at"] ?? "";
+        $title       = $todo["title"];
+        $finished_at = $todo["finished_at"];
 
-        if($finished_at && $this->isValidFormatFinishedAt($finished_at)){
+        if(isset($finished_at)){
             $sql = <<<SQL
             INSERT INTO todos (title, finished_at) VALUES (:title, :finished_at);
             SQL;
@@ -103,11 +103,11 @@ class TodoStore
             return false;
         }
 
-        $title       = $todo["title"] ?? "NO TITLE";
-        $finished_at = $todo["finished_at"] ?? "";
-        $status      = $todo["status"] ?? "todo";
+        $title       = $todo["title"];
+        $finished_at = $todo["finished_at"];
+        $status      = $todo["status"];
 
-        if($finished_at && $this->isValidFormatFinishedAt($finished_at)){
+        if(isset($finished_at)){
             // date_trunc('second', CURRENT_TIMESTAMP)
             // トランザクションの開始時刻の秒数以下を切り捨てる
             $sql = <<<SQL
@@ -166,7 +166,9 @@ class TodoStore
         }
 
         $current_status = $todo['status'];
-        $next_status    = (new \Simnet\TodoStatus($current_status))->getNextStatus();
+        $todo_status    = new \Simnet\TodoStatus($current_status);
+        $todo_status->advance();
+        $next_status    = $todo_status->get();
 
         // date_trunc('second', CURRENT_TIMESTAMP)
         // トランザクションの開始時刻の秒数以下を切り捨てる
@@ -274,21 +276,6 @@ class TodoStore
             $result = false;
         }
         return $result;
-    }
-
-    /**
-     * check format finished_at
-     *
-     * @param string $finished_at
-     * @return bool
-     */
-    private function isValidFormatFinishedAt(string $finished_at):bool{
-        // e.g. 2020-03-04T09:30
-        $pattern = "/\A[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]\z/";
-
-        $result = preg_match($pattern, $finished_at);
-
-        return ($result === 1) ? true : false;
     }
 
     /**

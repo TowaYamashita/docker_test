@@ -7,11 +7,11 @@
 
     switch($mode){
         case "create":
-            $title       = trim((string)filter_input(INPUT_POST, 'title'));
-            $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
+            $title_raw       = trim((string)filter_input(INPUT_POST, 'title'));
+            $finished_at_raw = trim((string)filter_input(INPUT_POST, 'finished_at'));
             $created_todo = [
-                "title"       => $title,
-                "finished_at" => $finished_at
+                "title"       => ((new Simnet\TodoTitle($title_raw))->get()),
+                "finished_at" => ((new Simnet\TodoFinishedAt($finished_at_raw))->get())
             ];
             $result = $TODO->create($created_todo);
             $alert_message_maker = new Simnet\AlertMessageMaker("create", $result);
@@ -19,14 +19,13 @@
             break;
         case "update":
             $id          = (int)filter_input(INPUT_POST, 'id');
-            $title       = trim((string)filter_input(INPUT_POST, 'title'));
-            $finished_at = trim((string)filter_input(INPUT_POST, 'finished_at'));
+            $title_raw       = trim((string)filter_input(INPUT_POST, 'title'));
+            $finished_at_raw = trim((string)filter_input(INPUT_POST, 'finished_at'));
             $status_raw  = trim((string)filter_input(INPUT_POST, 'status'));
-            $status      = (new Simnet\TodoStatus($status_raw))->getCurrentStatus();
             $updated_todo = [
-                "title"       => $title,
-                "finished_at" => $finished_at,
-                "status"      => $status
+                "title"       => ((new Simnet\TodoTitle($title_raw))->get()),
+                "finished_at" => ((new Simnet\TodoFinishedAt($finished_at_raw))->get()),
+                "status"      => ((new Simnet\TodoStatus($status_raw))->get())
             ];
             $result = $TODO->update($id, $updated_todo);
             $alert_message_maker = new Simnet\AlertMessageMaker("update", $result);
