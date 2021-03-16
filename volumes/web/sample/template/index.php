@@ -28,19 +28,21 @@
                     <div class="col-sm-10">
                         <div class="btn-toolbar">
                             <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
-                                <label class="btn btn-outline-dark active">
-                                    <input type="radio" name="sort_key" value="created_at" autocomplete="off" checked> TODOの作成日
+                                <?php $sort_key = empty($tmp=(string)filter_input(INPUT_GET, 'sort_key'))?'created_at':$tmp; ?>
+                                <label class="btn btn-outline-dark <?php if($sort_key === "created_at"): ?>active<?php endif; ?>">
+                                    <input type="radio" name="sort_key" value="created_at" autocomplete="off" <?php if($sort_key === "created_at"): ?>checked<?php endif; ?>> TODOの作成日
                                 </label>
-                                <label class="btn btn-outline-dark">
-                                    <input type="radio" name="sort_key" value="finished_at" autocomplete="off"> TODOの期限
+                                <label class="btn btn-outline-dark <?php if($sort_key === "finished_at"): ?>active<?php endif; ?>">
+                                    <input type="radio" name="sort_key" value="finished_at" autocomplete="off" <?php if($sort_key === "finished_at"): ?>checked<?php endif; ?>> TODOの期限
                                 </label>
                             </div>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-outline-dark active">
-                                    <input type="radio" name="sort_order" value="asc" autocomplete="off" checked> 昇順
+                                <?php $sort_order = empty($tmp=(string)filter_input(INPUT_GET, 'sort_order'))?'asc':$tmp; ?>
+                                <label class="btn btn-outline-dark <?php if($sort_order === "asc"): ?>active<?php endif; ?>">
+                                    <input type="radio" name="sort_order" value="asc" autocomplete="off" <?php if($sort_order === "asc"): ?>checked<?php endif; ?>> 昇順
                                 </label>
-                                <label class="btn btn-outline-dark">
-                                    <input type="radio" name="sort_order" value="desc" autocomplete="off"> 降順
+                                <label class="btn btn-outline-dark <?php if($sort_order === "desc"): ?>active<?php endif; ?>">
+                                    <input type="radio" name="sort_order" value="desc" autocomplete="off" <?php if($sort_order === "desc"): ?>checked<?php endif; ?>> 降順
                                 </label>
                             </div>
                         </div>
@@ -51,20 +53,21 @@
                         表示するTODO
                     </label>
                     <div class="col-sm-10">
+                        <?php $checked_status = is_null($tmp=filter_input(INPUT_GET, 'checked_status_to_be_displayed', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY))?['todo','doing','done']:$tmp; ?>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="todo" checked>
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="todo" <?php if(!is_null($checked_status) && in_array('todo', $checked_status, true)): ?>checked<?php endif;?>>
                             <label class="form-check-label">
                                 未完了
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="doing" checked>
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="doing" <?php if(!is_null($checked_status) && in_array('doing', $checked_status, true)): ?>checked<?php endif;?>>
                             <label class="form-check-label">
                                 着手
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="done" checked>
+                            <input class="form-check-input" type="checkbox" name="checked_status_to_be_displayed[]" value="done" <?php if(!is_null($checked_status) && in_array('done', $checked_status, true)): ?>checked<?php endif;?>>
                             <label class="form-check-label">
                                 完了
                             </label>

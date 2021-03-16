@@ -51,8 +51,8 @@ class ViewControler
         $script   = $this->html_script();
         $footer   = $this->html_footer();
 
-        $alert_message = $this->alert_message;
-        $todoList      = $this->todoList;
+        $alert_message  = $this->alert_message;
+        $todoList       = $this->todoList;
 
         require_once self::TEMPLATE_DIR . $this->filename;
     }

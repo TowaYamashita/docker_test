@@ -26,6 +26,9 @@ class TodoStatus
         return $this->status;
     }
 
+    /**
+     * advance status
+     */
     public function advance(){
         switch($this->status){
             case "todo":
@@ -36,24 +39,6 @@ class TodoStatus
                 break;
             case "done":
                 $this->status === "done";
-                break;
-        }
-    }
-    /**
-     * get next_level status
-     *
-     * @return string
-     */
-    public function getNextStatus():string{
-        switch($this->status){
-            case "todo":
-                return "doing";
-                break;
-            case "doing":
-                return "done";
-                break;
-            case "done":
-                return "done";
                 break;
         }
     }
