@@ -22,16 +22,20 @@ psql (PostgreSQL) 12.5 (Debian 12.5-1.pgdg100+1)
 ```
 # how to use
 
-## 1. Type command to terminal
+## 1. VSCodeにDockerの拡張機能を導入する
+
+## 2. 初期設定
 
 ```
-$ git clone https://github.com/TowaYamashita/docker_test.git
-$ docker-compose up -d
-$ docker-compose exec web bash
 $ composer install
+```
+
+## 3. 以下のコマンドを打って、ビルトインサーバを起動する
+
+```
 $ php -S 0.0.0.0:80 -t /home/public/
 ```
 
-## 2. Access below URL
+## 4. ローカルのブラウザで以下のリンクにアクセスする
 
 http://localhost:8080
