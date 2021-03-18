@@ -1,8 +1,8 @@
 FROM php:7.4-apache
 
-RUN apt-get update
+RUN apt-get update -y
 
-RUN apt-get install -y vim less
+RUN apt-get install -y vim less git
 
 RUN set -ex apk --no-cache add postgresql-dev libpq-dev
 RUN apt-get install -y libpq-dev libonig-dev\
