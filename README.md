@@ -22,20 +22,21 @@ psql (PostgreSQL) 12.5 (Debian 12.5-1.pgdg100+1)
 ```
 # how to use
 
-## 1. VSCodeにDockerの拡張機能を導入する
+## 1. VSCodeにDockerの拡張機能(ms-vscode-remote.remote-containers)を導入する
 
-## 2. 初期設定
+## 2. git cloneで落としてからVSCode > Open a Remote Window > Remote Containers: Reopen in Container
+
+```
+$ git clone https://github.com/TowaYamashita/todo_yamashita.git
+```
+
+## 3. VSCode内でターミナルを開き、以下のコマンドを打つ
 
 ```
 $ composer install
+$ php -S 0.0.0.0:80 -t /home/public
 ```
 
-## 3. 以下のコマンドを打って、ビルトインサーバを起動する
+## 3. ローカルのブラウザで以下のリンクにアクセスする
 
-```
-$ php -S 0.0.0.0:80 -t /home/public/
-```
-
-## 4. ローカルのブラウザで以下のリンクにアクセスする
-
-http://localhost:8080
+> http://localhost:8080
