@@ -166,7 +166,7 @@ class TodoStore
         }
 
         $current_status = $todo['status'];
-        $todo_status    = new \Simnet\TodoStatus($current_status);
+        $todo_status    = new \Simnet\Todo\Status($current_status);
         $todo_status->advance();
         $next_status    = $todo_status->get();
 

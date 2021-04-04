@@ -1,10 +1,10 @@
 <?php
 
-namespace Simnet;
+namespace Simnet\Todo;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-class TodoStatus
+class Status
 {
     private static $DB;
     private static $DEFAULT_STATUS = "todo";

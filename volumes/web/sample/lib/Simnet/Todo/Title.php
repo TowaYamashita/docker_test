@@ -1,10 +1,10 @@
 <?php
 
-namespace Simnet;
+namespace Simnet\Todo;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-class TodoStatus
+class Title
 {
     private static $DEFAULT_TITLE = "NO TITLE";
     private $title;
@@ -19,7 +19,7 @@ class TodoStatus
      * @return string
      */
     public function get():string{
-        return $this->status;
+        return $this->title;
     }
 
     private function validate(?string $title):string{
@@ -29,7 +29,7 @@ class TodoStatus
 
         if(mb_strlen($title, "UTF-8") > 140){
             $title = mb_substr($title, 140, 140, "UTF-8");
-            return $title;
         }
+        return $title;
     }
 }

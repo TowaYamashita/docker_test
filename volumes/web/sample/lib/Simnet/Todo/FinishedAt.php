@@ -1,10 +1,10 @@
 <?php
 
-namespace Simnet;
+namespace Simnet\Todo;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
-class TodoFinishedAt
+class FinishedAt
 {
     private static $DEFAULT_FINISHED_AT = "";
     private $finished_at;
@@ -23,8 +23,8 @@ class TodoFinishedAt
     }
 
     private function validate(?string $finished_at):string{
-        // e.g. 2021-04-01T12:00
-        $pattern = "/\A[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]\z/";
+        // e.g. 2021-04-01T12:00:00
+        $pattern = "/\A[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\z/";
 
         if(is_null($finished_at) || !preg_match($pattern, $finished_at)){
             return self::$DEFAULT_FINISHED_AT;
