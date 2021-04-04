@@ -30,11 +30,10 @@ psql (PostgreSQL) 12.5 (Debian 12.5-1.pgdg100+1)
 $ git clone https://github.com/TowaYamashita/todo_yamashita.git
 ```
 
-## 3. VSCode内でターミナルを開き、以下のコマンドを打つ
+## 3. VSCode内でターミナルを開き、スクリプトを実行する
 
 ```
-$ composer install
-$ php -S 0.0.0.0:80 -t /home/public
+$ ./startup.sh
 ```
 
 ## 3. ローカルのブラウザで以下のリンクにアクセスする
