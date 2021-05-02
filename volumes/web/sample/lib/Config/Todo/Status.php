@@ -1,6 +1,6 @@
 <?php
 
-namespace Simnet\Todo;
+namespace Config\Todo;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
@@ -12,7 +12,7 @@ class Status
     private $status;
 
     public function __construct(?string $status){
-        self::$DB           = \Simnet\Database::getPDO();
+        self::$DB           = \Config\Database::getPDO();
         self::$STATUS_LEVEL = self::fetchStatusFromDB();
         $this->status = $this->validate($status);
     }
@@ -72,7 +72,7 @@ class Status
 
     public static function fetchStatusFromDB(){
         if(!isset(self::$DB)){
-            self::$DB = \Simnet\Database::getPDO();
+            self::$DB = \Config\Database::getPDO();
         }
 
         $sql = <<< SQL

@@ -1,6 +1,6 @@
 <?php
 
-namespace Simnet\Todo;
+namespace Config\Todo;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Simnet;
+namespace Config;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -10,7 +10,7 @@ class TodoStore
     private static $DB;
 
     public function __construct(){
-        self::$DB = \Simnet\Database::getPDO();
+        self::$DB = \Config\Database::getPDO();
     }
 
     /**
@@ -166,7 +166,7 @@ class TodoStore
         }
 
         $current_status = $todo['status'];
-        $todo_status    = new \Simnet\Todo\Status($current_status);
+        $todo_status    = new \Config\Todo\Status($current_status);
         $todo_status->advance();
         $next_status    = $todo_status->get();
 

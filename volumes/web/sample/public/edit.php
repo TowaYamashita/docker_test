@@ -5,9 +5,9 @@
 
     if($mode === "edit"){
         $id = (int)filter_input(INPUT_GET, 'id');
-        $TODO = new Simnet\TodoStore();
+        $TODO = new Config\TodoStore();
         $todoList = $TODO->findById($id);
 
-        $view = new Simnet\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
+        $view = new Config\ViewControler(basename($_SERVER['SCRIPT_NAME']), null);
         $view->assignTodoListToBeDisplayed($todoList);
     }

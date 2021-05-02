@@ -1,12 +1,7 @@
 {
-    "name": "yamashita/todo",
-    "description": "todo apprication",
-    "type": "project",
-    "license": "BSD",
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Simnet\\": "lib/Simnet"
+            "Simnet\\": "lib/Config"
         }
     },
     "require": {
